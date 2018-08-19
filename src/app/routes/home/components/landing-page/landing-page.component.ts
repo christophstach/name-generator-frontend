@@ -91,7 +91,7 @@ export class LandingPageComponent {
     const displayString = this.randomProjectName.join(this.separator);
 
     this.clipboardService.copyFromContent(displayString);
-    this.snackBarService.open(`${displayString} was copied to clipboard`);
+    this.snackBarService.open(`${displayString} was copied to clipboard`, null, { duration: 2500 });
   }
 
   ///////////////////////////////
