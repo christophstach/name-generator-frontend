@@ -12,6 +12,9 @@
   </mat-sidenav>
   <mat-sidenav-content role="main">
 
+    <div class="fading-image" #fadingImageOne [@fadingImageOne]="fadingImageState"></div>
+    <div class="fading-image" #fadingImageTwo [@fadingImageTwo]="fadingImageState"></div>
+
     <mat-toolbar color="primary" class="mat-elevation-z8">
       <!--
       <button mat-icon-button (click)="sideNav.toggle()">

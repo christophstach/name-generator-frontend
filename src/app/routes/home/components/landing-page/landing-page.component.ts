@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { StringHelperService } from '../../../../shared/services/string-helper.service';
 import { MatSnackBar } from '@angular/material';
 import { ClipboardService } from 'ngx-clipboard';
@@ -34,12 +34,17 @@ export class LandingPageComponent {
   method: GenerationMethod = GenerationMethod.SILLY_ID;
   sillyId = new SillyId(null, '-', false);
 
+  @ViewChild('displayText')
+  displayText: ElementRef;
+
+  @ViewChild('card', { read: ElementRef })
+  card: ElementRef;
+
 
   constructor(
     private readonly stringHelperService: StringHelperService,
     private readonly clipboardService: ClipboardService,
-    private readonly snackBarService: MatSnackBar,
-    private readonly elementRef: ElementRef
+    private readonly snackBarService: MatSnackBar
   ) {
     this.generate();
   }
@@ -55,7 +60,7 @@ export class LandingPageComponent {
 
   @HostListener('document:click', [ '$event' ])
   onClick(e: MouseEvent) {
-    if (e.target === this.elementRef.nativeElement) {
+    if (e.target === this.card.nativeElement || e.target === this.displayText.nativeElement) {
       this.generate();
     }
   }
