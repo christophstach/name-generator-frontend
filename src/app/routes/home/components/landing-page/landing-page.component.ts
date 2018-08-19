@@ -109,6 +109,8 @@ export class LandingPageComponent {
       .replace(',', '')
       .replace('/', ' ')
       .replace('-', ' ')
+      .replace('&', '')
+      .replace('  ', '')
       .toLowerCase();
 
     return this.stringHelperService.removeDiacritics(name).split(' ');
@@ -119,6 +121,8 @@ export class LandingPageComponent {
       .replace(',', '')
       .replace('/', ' ')
       .replace('-', ' ')
+      .replace('&', '')
+      .replace('  ', '')
       .toLowerCase();
 
     return this.stringHelperService.removeDiacritics(name).split(' ');
@@ -129,6 +133,8 @@ export class LandingPageComponent {
       .replace(',', '')
       .replace('/', ' ')
       .replace('-', ' ')
+      .replace('&', '')
+      .replace('  ', '')
       .toLowerCase();
 
     return this.stringHelperService.removeDiacritics(name).split(' ');
