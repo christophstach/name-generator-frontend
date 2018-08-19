@@ -7,7 +7,9 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
+  MatMenuModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import { JoinPipe } from './pipes/join.pipe';
@@ -23,7 +25,9 @@ import { JoinPipe } from './pipes/join.pipe';
     MatIconModule,
     MatListModule,
     MatCardModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule,
+    MatMenuModule
   ],
   declarations: [ JoinPipe ],
   exports: [
@@ -38,7 +42,9 @@ import { JoinPipe } from './pipes/join.pipe';
     MatIconModule,
     MatListModule,
     MatCardModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule,
+    MatMenuModule
   ]
 })
 export class SharedModule {

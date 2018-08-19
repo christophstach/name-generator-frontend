@@ -1,26 +1,26 @@
 :host {
   /* Smartphones (portrait and landscape) ----------- */
-  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     padding: 0 1rem;
   }
 
   /* Smartphones (landscape) ----------- */
-  @media only screen and (min-width : 321px) {
+  @media only screen and (min-width: 321px) {
     padding: 0 1rem;
   }
 
   /* Smartphones (portrait) ----------- */
-  @media only screen and (max-width : 320px) {
+  @media only screen and (max-width: 320px) {
     padding: 0 1rem;
   }
 
   /* Desktops and laptops ----------- */
-  @media only screen  and (min-width : 1224px) {
+  @media only screen and (min-width: 1224px) {
     padding: 0 20rem;
   }
 
   /* Large screens ----------- */
-  @media only screen  and (min-width : 1824px) {
+  @media only screen and (min-width: 1824px) {
     padding: 0 35rem;
   }
 
@@ -30,10 +30,15 @@
 
   mat-card {
     width: 100%;
+    display: flex;
+    align-items: center;
 
     h1 {
       user-select: none;
       text-align: center;
+      flex-grow: 1;
+      margin: 0;
+      padding: 0;
     }
   }
 }

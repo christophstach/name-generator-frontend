@@ -1,3 +1,14 @@
 <mat-card>
-  <h1 class="mat-h1">{{randomProjectName | join:separator}}</h1>
+  <h1 class="mat-h1" #displayText>{{randomProjectName | join:separator}}</h1>
+
+  <mat-menu #optionsMenu="matMenu">
+    <button mat-menu-item (click)="setMethodSillyId()" [disabled]="isMethodSillyId()">Silly Id</button>
+    <button mat-menu-item (click)="setMethodDragonNames()" [disabled]="isMethodDragonNames()">Dragon Names</button>
+    <button mat-menu-item (click)="setMethodCatNames()" [disabled]="isMethodCatNames()">Cat Names</button>
+    <button mat-menu-item (click)="setMethodDogNames()" [disabled]="isMethodDogNames()">Dog Names</button>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="optionsMenu" #optionsMenuButton>
+    <mat-icon>more_vert</mat-icon>
+  </button>
 </mat-card>

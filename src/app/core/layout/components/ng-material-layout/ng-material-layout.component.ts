@@ -12,7 +12,11 @@ interface NavItem {
   styleUrls: [ './ng-material-layout.component.scss' ]
 })
 export class NgMaterialLayoutComponent {
-  navItems: NavItem[] = [
+  readonly slideShowImages: string[] = [
+    '../../../../../assets/backgrounds/stones.jpg'
+  ];
+
+  readonly navItems: NavItem[] = [
     {
       text: 'Home',
       route: '/',
