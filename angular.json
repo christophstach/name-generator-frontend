@@ -3,32 +3,35 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend-material": {
+    "frontend": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {
-        "@schematics/angular:component": {
+        "@ngrx/schematics:component": {
           "styleext": "scss",
           "spec": false
         },
-        "@schematics/angular:class": {
+        "@ngrx/schematics:class": {
           "spec": false
         },
-        "@schematics/angular:directive": {
+        "@ngrx/schematics:directive": {
           "spec": false
         },
-        "@schematics/angular:guard": {
+        "@ngrx/schematics:guard": {
           "spec": false
         },
-        "@schematics/angular:module": {
+        "@ngrx/schematics:module": {
           "spec": false
         },
-        "@schematics/angular:pipe": {
+        "@ngrx/schematics:pipe": {
           "spec": false
         },
-        "@schematics/angular:service": {
+        "@ngrx/schematics:service": {
+          "spec": false
+        },
+        "@ngrx/schematics:effect": {
           "spec": false
         }
       },
@@ -36,16 +39,20 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/frontend-material",
+            "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.json"
             ],
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/styles.scss"
             ],
             "scripts": []
@@ -66,25 +73,26 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "serviceWorker": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "frontend-material:build"
+            "browserTarget": "frontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "frontend-material:build:production"
+              "browserTarget": "frontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "frontend-material:build"
+            "browserTarget": "frontend:build"
           }
         },
         "test": {
@@ -95,12 +103,16 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/styles.scss"
             ],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.json"
             ]
           }
         },
@@ -115,10 +127,28 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
         }
       }
     },
-    "frontend-material-e2e": {
+    "frontend-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -126,11 +156,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "frontend-material:serve"
+            "devServerTarget": "frontend:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "frontend-material:serve:production"
+              "devServerTarget": "frontend:serve:production"
             }
           }
         },
@@ -146,5 +176,8 @@
       }
     }
   },
-  "defaultProject": "frontend-material"
+  "defaultProject": "frontend",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

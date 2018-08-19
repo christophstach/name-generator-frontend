@@ -1,0 +1,27 @@
+<mat-sidenav-container class="page-container">
+  <mat-sidenav role="navigation" #sideNav>
+    <mat-toolbar color="primary" class="mat-elevation-z8">RPNG</mat-toolbar>
+
+    <mat-nav-list>
+      <mat-list-item *ngFor="let navItem of navItems">
+        <a matLine [routerLink]="navItem.route">{{navItem.text}}</a>
+        <mat-icon *ngIf="navItem.icon">{{navItem.icon}}</mat-icon>
+      </mat-list-item>
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content role="main">
+
+    <mat-toolbar color="primary" class="mat-elevation-z8">
+      <!--
+      <button mat-icon-button (click)="sideNav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      -->
+
+      <h1>Random Project Name Generator</h1>
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

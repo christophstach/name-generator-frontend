@@ -1,0 +1,39 @@
+:host {
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    padding: 0 1rem;
+  }
+
+  /* Smartphones (landscape) ----------- */
+  @media only screen and (min-width : 321px) {
+    padding: 0 1rem;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width : 320px) {
+    padding: 0 1rem;
+  }
+
+  /* Desktops and laptops ----------- */
+  @media only screen  and (min-width : 1224px) {
+    padding: 0 20rem;
+  }
+
+  /* Large screens ----------- */
+  @media only screen  and (min-width : 1824px) {
+    padding: 0 35rem;
+  }
+
+  height: calc(100% - 64px);
+  display: flex;
+  align-items: center;
+
+  mat-card {
+    width: 100%;
+
+    h1 {
+      user-select: none;
+      text-align: center;
+    }
+  }
+}
