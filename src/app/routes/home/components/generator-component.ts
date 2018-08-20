@@ -1,8 +1,8 @@
-import { StringHelperService } from '../../../shared/services/string-helper.service';
-import { ClipboardService } from 'ngx-clipboard';
 import { MatSnackBar } from '@angular/material';
-import { GeneratorServiceInterface } from '../../../shared/interfaces/generator-service.interface';
+import { ClipboardService } from 'ngx-clipboard';
 import { GeneratorOptionsInterface } from '../../../shared/interfaces/generator-options.interface';
+import { GeneratorServiceInterface } from '../../../shared/interfaces/generator-service.interface';
+import { StringHelperService } from '../../../shared/services/string-helper.service';
 
 export abstract class GeneratorComponent {
   name = 'Click or tap to generate random name';
@@ -20,16 +20,15 @@ export abstract class GeneratorComponent {
   }
 
   protected generate() {
+    this.name = this.generatorService.random();
+    this.name = this.options.prefix ? this.options.prefix + this.name : this.name;
+    this.name = this.options.suffix ? this.name + this.options.suffix : this.name;
+
     switch (this.options.mode) {
-      case 'normal':
-        this.name = this.generatorService.random();
-        break;
       case 'separated':
-        this.name = this.stringHelperService.removeDiacritics(
-          this.stringHelperService.removeSpecialChars(
-            this.generatorService.random()
-          )
-        ).toLowerCase().split(' ').join(this.options.separator);
+        this.name = this.stringHelperService.removeSpecialChars(this.name);
+        this.name = this.stringHelperService.removeDiacritics(this.name);
+        this.name = this.name.toLowerCase().split(' ').join(this.options.separator);
         break;
     }
 
