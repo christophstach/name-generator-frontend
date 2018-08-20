@@ -1,20 +1,33 @@
-.filler {
-  /*
-    This fills the remaining space, by using flexbox.
-    Every toolbar row uses a flexbox row layout.
-  */
-  flex: 1 1 auto;
+:host.small-layout {
+  .router-outlet-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 56px;
+  }
 }
 
+:host.large-layout {
+  .router-outlet-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 64px;
+  }
+}
+
+
 .page-container {
-
-
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 }
+
+.top-nav-wrapper {
+  position: absolute;
+  width: 100%;
+}
+
 
 mat-sidenav {
   mat-nav-list {
@@ -23,7 +36,6 @@ mat-sidenav {
     }
   }
 }
-
 
 mat-sidenav-content {
   .fading-image {

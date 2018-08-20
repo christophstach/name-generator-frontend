@@ -1,6 +1,6 @@
 <mat-sidenav-container class="page-container">
   <mat-sidenav role="navigation" #sideNav>
-    <mat-toolbar color="primary" class="mat-elevation-z8">RPNG</mat-toolbar>
+    <mat-toolbar color="primary" class="mat-elevation-z8">NG</mat-toolbar>
 
     <mat-nav-list>
       <mat-list-item *ngFor="let navItem of navItems">
@@ -15,16 +15,23 @@
     <div class="fading-image" #fadingImageOne [@fadingImageOne]="fadingImageState"></div>
     <div class="fading-image" #fadingImageTwo [@fadingImageTwo]="fadingImageState"></div>
 
-    <mat-toolbar color="primary" class="mat-elevation-z8">
-      <!--
-      <button mat-icon-button (click)="sideNav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      -->
+    <div class="mat-elevation-z6 top-nav-wrapper">
+      <mat-toolbar color="primary" >
+        <!--
+        <button mat-icon-button (click)="sideNav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        -->
 
-      <h1>Random Project Name Generator</h1>
-    </mat-toolbar>
+        <h1>Name Generator</h1>
+      </mat-toolbar>
+    </div>
+    <div class="mat-elevation-z10 router-outlet-wrapper">
+      <router-outlet></router-outlet>
+    </div>
 
-    <router-outlet></router-outlet>
+
+
+
   </mat-sidenav-content>
 </mat-sidenav-container>

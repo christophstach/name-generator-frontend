@@ -1,14 +1,25 @@
-<mat-card #card>
-  <h1 class="mat-h1" #displayText>{{randomProjectName | join:separator}}</h1>
+<mat-tab-group color="accent" backgroundColor="primary">
+  <mat-tab label="Silly ID's">
+    <div class="tab-content">
+      <app-silly-ids></app-silly-ids>
+    </div>
+  </mat-tab>
 
-  <mat-menu #optionsMenu="matMenu">
-    <button mat-menu-item (click)="setMethodSillyId()" [disabled]="isMethodSillyId()">Silly Id</button>
-    <button mat-menu-item (click)="setMethodDragonNames()" [disabled]="isMethodDragonNames()">Dragon Names</button>
-    <button mat-menu-item (click)="setMethodCatNames()" [disabled]="isMethodCatNames()">Cat Names</button>
-    <button mat-menu-item (click)="setMethodDogNames()" [disabled]="isMethodDogNames()">Dog Names</button>
-  </mat-menu>
+  <mat-tab label="Dragon Names">
+    <div class="tab-content">
+      <app-dragon-names></app-dragon-names>
+    </div>
+  </mat-tab>
 
-  <button mat-icon-button [matMenuTriggerFor]="optionsMenu" #optionsMenuButton>
-    <mat-icon>more_vert</mat-icon>
-  </button>
-</mat-card>
+  <mat-tab label="Dog Names">
+    <div class="tab-content">
+      <app-dog-names></app-dog-names>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Cat Names">
+    <div class="tab-content">
+      <app-cat-names></app-cat-names>
+    </div>
+  </mat-tab>
+</mat-tab-group>

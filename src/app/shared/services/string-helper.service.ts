@@ -7,6 +7,15 @@ export class StringHelperService {
   constructor() {
   }
 
+  removeSpecialChars(str: string): string {
+    return str
+      .replace(',', '')
+      .replace('/', ' ')
+      .replace('-', ' ')
+      .replace('&', '')
+      .replace('  ', '');
+  }
+
   /* tslint:disable:max-line-length */
   removeDiacritics(str: string): string {
     const defaultDiacriticsRemovalMap = [

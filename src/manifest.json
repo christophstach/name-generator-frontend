@@ -1,6 +1,6 @@
 {
-  "name": "Random Project Name Generator",
-  "short_name": "RPNG",
+  "name": "Name Generator",
+  "short_name": "NG",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

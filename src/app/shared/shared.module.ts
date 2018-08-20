@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
@@ -10,8 +9,10 @@ import {
   MatMenuModule,
   MatSidenavModule,
   MatSnackBarModule,
+  MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
+import { RouterModule } from '@angular/router';
 import { JoinPipe } from './pipes/join.pipe';
 
 @NgModule({
@@ -27,7 +28,8 @@ import { JoinPipe } from './pipes/join.pipe';
     MatCardModule,
     MatInputModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTabsModule
   ],
   declarations: [ JoinPipe ],
   exports: [
@@ -44,7 +46,8 @@ import { JoinPipe } from './pipes/join.pipe';
     MatCardModule,
     MatInputModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTabsModule
   ]
 })
 export class SharedModule {

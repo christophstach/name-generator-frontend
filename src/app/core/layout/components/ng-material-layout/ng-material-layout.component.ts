@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { range, shuffle } from 'lodash';
 import { from, interval, Observable } from 'rxjs';
 import { map, repeat, startWith, zip } from 'rxjs/operators';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 interface NavItem {
   text: string;
@@ -29,6 +30,9 @@ interface NavItem {
   ]
 })
 export class NgMaterialLayoutComponent implements OnInit {
+  @HostBinding('class.small-layout') smallLayout = false;
+  @HostBinding('class.large-layout') largeLayout = false;
+
   $changingImages$: Observable<any>;
 
   @ViewChild('fadingImageOne')
@@ -39,7 +43,7 @@ export class NgMaterialLayoutComponent implements OnInit {
 
   fadingImageState: 'one' | 'two' = 'one';
 
-  readonly numImages = 17;
+  readonly numImages = 16;
   readonly slideShowImages: string[];
   readonly navItems: NavItem[] = [
     {
@@ -66,7 +70,13 @@ export class NgMaterialLayoutComponent implements OnInit {
     }
   ];
 
-  constructor() {
+  constructor(breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe(Breakpoints.XSmall).subscribe(result => result.matches && this.activateSmallLayout());
+    breakpointObserver.observe(Breakpoints.Small).subscribe(result => result.matches && this.activateLargeLayout());
+    breakpointObserver.observe(Breakpoints.Medium).subscribe(result => result.matches && this.activateLargeLayout());
+    breakpointObserver.observe(Breakpoints.Large).subscribe(result => result.matches && this.activateLargeLayout());
+    breakpointObserver.observe(Breakpoints.XLarge).subscribe(result => result.matches && this.activateLargeLayout());
+
     this.slideShowImages = shuffle(
       range(1, this.numImages + 1)
         .map(num => `../../../../../assets/backgrounds/${num}.jpg`)
@@ -93,5 +103,15 @@ export class NgMaterialLayoutComponent implements OnInit {
         this.fadingImageState = 'two';
       }
     });
+  }
+
+  activateSmallLayout() {
+    this.smallLayout = true;
+    this.largeLayout = false;
+  }
+
+  activateLargeLayout() {
+    this.smallLayout = false;
+    this.largeLayout = true;
   }
 }
