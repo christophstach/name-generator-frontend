@@ -4,6 +4,10 @@
     width: 100%;
     top: 56px;
   }
+
+  .logo {
+    height: 32px;
+  }
 }
 
 :host.large-layout {
@@ -11,6 +15,10 @@
     position: absolute;
     width: 100%;
     top: 64px;
+  }
+
+  .logo {
+    height: 32px;
   }
 }
 
@@ -54,4 +62,10 @@ mat-sidenav-content {
       margin-left: 1rem;
     }
   }
+}
+
+.filler {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
 }

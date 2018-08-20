@@ -114,4 +114,8 @@ export class NgMaterialLayoutComponent implements OnInit {
     this.smallLayout = false;
     this.largeLayout = true;
   }
+
+  onSettingsClick(e: Event) {
+    alert('open settings');
+  }
 }
