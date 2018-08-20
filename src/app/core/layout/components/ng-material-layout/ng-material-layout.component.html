@@ -21,16 +21,14 @@
         <h1>Name Generator</h1>
 
         <span class="filler"></span>
-        <button mat-icon-button (click)="onSettingsClick($event)">
-          <mat-icon aria-label="Settings">settings</mat-icon>
+        <button mat-icon-button aria-label="Settings" (click)="onSettingsClick($event)">
+          <mat-icon>settings</mat-icon>
         </button>
       </mat-toolbar>
     </div>
     <div class="mat-elevation-z24 router-outlet-wrapper">
       <router-outlet></router-outlet>
     </div>
-
-
 
 
   </mat-sidenav-content>
