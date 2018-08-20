@@ -1,12 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatCardModule,
+  MatDialogModule,
+  MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatRadioModule,
+  MatSelectModule,
   MatSidenavModule,
   MatSnackBarModule,
   MatTabsModule,
@@ -19,6 +24,7 @@ import { JoinPipe } from './pipes/join.pipe';
   imports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
 
     MatToolbarModule,
     MatSidenavModule,
@@ -29,12 +35,17 @@ import { JoinPipe } from './pipes/join.pipe';
     MatInputModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   declarations: [ JoinPipe ],
   exports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
 
     JoinPipe,
 
@@ -47,7 +58,11 @@ import { JoinPipe } from './pipes/join.pipe';
     MatInputModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatSelectModule
   ]
 })
 export class SharedModule {

@@ -2,6 +2,7 @@
   .router-outlet-wrapper {
     position: absolute;
     width: 100%;
+    height: calc(100% - 56px);
     top: 56px;
   }
 
@@ -14,6 +15,7 @@
   .router-outlet-wrapper {
     position: absolute;
     width: 100%;
+    height: calc(100% - 64px);
     top: 64px;
   }
 

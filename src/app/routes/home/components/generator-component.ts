@@ -1,34 +1,39 @@
 import { MatSnackBar } from '@angular/material';
+import { select, Store } from '@ngrx/store';
 import { ClipboardService } from 'ngx-clipboard';
-import { GeneratorOptionsInterface } from '../../../shared/interfaces/generator-options.interface';
+import { Root } from '../../../core/state/reducers';
 import { GeneratorServiceInterface } from '../../../shared/interfaces/generator-service.interface';
+import { GeneratorSettingsInterface } from '../../../shared/interfaces/generator-settings.interface';
 import { StringHelperService } from '../../../shared/services/string-helper.service';
 
 export abstract class GeneratorComponent {
   name = 'Click or tap to generate random name';
-  options: GeneratorOptionsInterface = {
-    mode: 'separated',
-    separator: '-'
-  };
+  settings: GeneratorSettingsInterface;
 
   protected constructor(
     protected readonly generatorService: GeneratorServiceInterface,
     protected readonly stringHelperService: StringHelperService,
     protected readonly clipboardService: ClipboardService,
-    protected readonly snackBarService: MatSnackBar
+    protected readonly snackBarService: MatSnackBar,
+    protected readonly store: Store<Root>
   ) {
+    this.store.pipe(
+      select('generatorSettings')
+    ).subscribe((generatorSettings: GeneratorSettingsInterface) => {
+      this.settings = generatorSettings;
+    });
   }
 
   protected generate() {
     this.name = this.generatorService.random();
-    this.name = this.options.prefix ? this.options.prefix + this.name : this.name;
-    this.name = this.options.suffix ? this.name + this.options.suffix : this.name;
+    this.name = this.settings.prefix ? this.settings.prefix + this.name : this.name;
+    this.name = this.settings.suffix ? this.name + this.settings.suffix : this.name;
 
-    switch (this.options.mode) {
+    switch (this.settings.mode) {
       case 'separated':
         this.name = this.stringHelperService.removeSpecialChars(this.name);
         this.name = this.stringHelperService.removeDiacritics(this.name);
-        this.name = this.name.toLowerCase().split(' ').join(this.options.separator);
+        this.name = this.name.toLowerCase().split(' ').join(this.settings.separator);
         break;
     }
 

@@ -1,4 +1,4 @@
-export interface GeneratorOptionsInterface {
+export interface GeneratorSettingsInterface {
   mode: 'normal' | 'separated';
   separator?: string;
   prefix?: string;

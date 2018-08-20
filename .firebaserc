@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "random-project-name-generator"
+    "default": "name-generator-cs"
   }
 }

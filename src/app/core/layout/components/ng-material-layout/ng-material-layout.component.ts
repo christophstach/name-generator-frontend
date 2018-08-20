@@ -1,9 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { range, shuffle } from 'lodash';
 import { from, interval, Observable } from 'rxjs';
 import { map, repeat, startWith, zip } from 'rxjs/operators';
+import { GeneratorSettingsDialogComponent } from '../generator-settings-dialog/generator-settings-dialog.component';
 
 interface NavItem {
   text: string;
@@ -70,7 +72,10 @@ export class NgMaterialLayoutComponent implements OnInit {
     }
   ];
 
-  constructor(breakpointObserver: BreakpointObserver) {
+  constructor(
+    breakpointObserver: BreakpointObserver,
+    private readonly dialog: MatDialog
+  ) {
     breakpointObserver.observe(Breakpoints.XSmall).subscribe(result => result.matches && this.activateSmallLayout());
     breakpointObserver.observe(Breakpoints.Small).subscribe(result => result.matches && this.activateLargeLayout());
     breakpointObserver.observe(Breakpoints.Medium).subscribe(result => result.matches && this.activateLargeLayout());
@@ -116,6 +121,6 @@ export class NgMaterialLayoutComponent implements OnInit {
   }
 
   onSettingsClick(e: Event) {
-    alert('open settings');
+    this.dialog.open(GeneratorSettingsDialogComponent, );
   }
 }
