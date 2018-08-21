@@ -18,7 +18,7 @@ import { CoreModule } from './core/core.module';
     CoreModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule.withServerTransition({ appId: 'app-server' }),
     TransferHttpCacheModule
   ],
   providers: [],
