@@ -1,7 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Store } from '@ngrx/store';
-import { ClipboardService } from 'ngx-clipboard';
 import { Root } from '../../../../core/state/reducers';
 import { CatNamesService } from '../../../../shared/services/cat-names.service';
 import { StringHelperService } from '../../../../shared/services/string-helper.service';
@@ -29,10 +28,9 @@ export class CatNamesComponent extends GeneratorComponent {
   constructor(
     readonly generatorService: CatNamesService,
     readonly stringHelperService: StringHelperService,
-    readonly clipboardService: ClipboardService,
     readonly snackBarService: MatSnackBar,
     readonly store: Store<Root>
   ) {
-    super(generatorService, stringHelperService, clipboardService, snackBarService, store);
+    super(generatorService, stringHelperService, snackBarService, store);
   }
 }

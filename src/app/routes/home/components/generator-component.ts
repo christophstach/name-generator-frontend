@@ -1,6 +1,5 @@
 import { MatSnackBar } from '@angular/material';
 import { select, Store } from '@ngrx/store';
-import { ClipboardService } from 'ngx-clipboard';
 import { Root } from '../../../core/state/reducers';
 import { GeneratorServiceInterface } from '../../../shared/interfaces/generator-service.interface';
 import { GeneratorSettingsInterface } from '../../../shared/interfaces/generator-settings.interface';
@@ -13,7 +12,6 @@ export abstract class GeneratorComponent {
   protected constructor(
     protected readonly generatorService: GeneratorServiceInterface,
     protected readonly stringHelperService: StringHelperService,
-    protected readonly clipboardService: ClipboardService,
     protected readonly snackBarService: MatSnackBar,
     protected readonly store: Store<Root>
   ) {
@@ -37,7 +35,7 @@ export abstract class GeneratorComponent {
         break;
     }
 
-    this.clipboardService.copyFromContent(this.name);
+    // this.clipboardService.copyFromContent(this.name);
     this.snackBarService.open(`${this.name} was copied to clipboard`, null, { duration: 2500 });
   }
 

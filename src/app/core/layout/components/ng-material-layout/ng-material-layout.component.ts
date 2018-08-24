@@ -1,11 +1,14 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { range, shuffle } from 'lodash';
-import { from, interval, Observable } from 'rxjs';
+import { from, interval, Observable, EMPTY } from 'rxjs';
 import { map, repeat, startWith, zip } from 'rxjs/operators';
 import { GeneratorSettingsDialogComponent } from '../generator-settings-dialog/generator-settings-dialog.component';
+import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../../../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 interface NavItem {
   text: string;
@@ -35,7 +38,7 @@ export class NgMaterialLayoutComponent implements OnInit {
   @HostBinding('class.small-layout') smallLayout = false;
   @HostBinding('class.large-layout') largeLayout = false;
 
-  $changingImages$: Observable<any>;
+  changingImages$: Observable<any>;
 
   @ViewChild('fadingImageOne')
   fadingImageOne: ElementRef;
@@ -73,33 +76,39 @@ export class NgMaterialLayoutComponent implements OnInit {
   ];
 
   constructor(
-    breakpointObserver: BreakpointObserver,
-    private readonly dialog: MatDialog
+    private readonly breakpointObserver: BreakpointObserver,
+    private readonly dialog: MatDialog,
+    @Inject(PLATFORM_ID) private readonly platformId: Object
   ) {
-    breakpointObserver.observe(Breakpoints.XSmall).subscribe(result => result.matches && this.activateSmallLayout());
-    breakpointObserver.observe(Breakpoints.Small).subscribe(result => result.matches && this.activateLargeLayout());
-    breakpointObserver.observe(Breakpoints.Medium).subscribe(result => result.matches && this.activateLargeLayout());
-    breakpointObserver.observe(Breakpoints.Large).subscribe(result => result.matches && this.activateLargeLayout());
-    breakpointObserver.observe(Breakpoints.XLarge).subscribe(result => result.matches && this.activateLargeLayout());
+    this.breakpointObserver.observe(Breakpoints.XSmall).subscribe(result => result.matches && this.activateSmallLayout());
+    this.breakpointObserver.observe(Breakpoints.Small).subscribe(result => result.matches && this.activateLargeLayout());
+    this.breakpointObserver.observe(Breakpoints.Medium).subscribe(result => result.matches && this.activateLargeLayout());
+    this.breakpointObserver.observe(Breakpoints.Large).subscribe(result => result.matches && this.activateLargeLayout());
+    this.breakpointObserver.observe(Breakpoints.XLarge).subscribe(result => result.matches && this.activateLargeLayout());
 
     this.slideShowImages = shuffle(
-      range(1, this.numImages + 1)
-        .map(num => `../../../../../assets/backgrounds/${num}.jpg`)
+      range(1, this.numImages + 1).map(num => `../../../../../assets/backgrounds/${num}.jpg`)
     );
 
-    this.$changingImages$ = interval(30000).pipe(
-      startWith(1),
-      zip(
-        from(this.slideShowImages).pipe(
-          repeat()
-        )
-      ),
-      map(values => [ values[ 0 ] % 2, `url('${values[ 1 ]}')` ])
-    );
+    if (isPlatformBrowser(platformId)) {
+      this.changingImages$ = interval(30000).pipe(
+        startWith(1),
+        zip(
+          from(this.slideShowImages).pipe(
+            repeat()
+          )
+        ),
+        map(values => [ values[ 0 ] % 2, `url('${values[ 1 ]}')` ])
+      );
+    } else {
+      this.changingImages$ = EMPTY;
+    }
   }
 
   ngOnInit() {
-    this.$changingImages$.subscribe(image => {
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production });
+
+    this.changingImages$.subscribe(image => {
       if (image[ 0 ] === 0) {
         this.fadingImageOne.nativeElement.style.backgroundImage = image[ 1 ];
         this.fadingImageState = 'one';
