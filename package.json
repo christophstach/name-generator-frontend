@@ -15,7 +15,8 @@
     "generate:prerender": "cd dist && node prerender",
     "serve:prerender": "lite-server --baseDir=dist/browser",
     "serve:production": "ng build --prod && lite-server --baseDir=dist/browser",
-    "serve:ssr": "node dist/server"
+    "serve:ssr": "node dist/server",
+    "deploy:firebase": "npm run build:prerender && firebase deploy"
   },
   "private": true,
   "dependencies": {
