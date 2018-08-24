@@ -1,14 +1,12 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, ElementRef, HostBinding, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { range, shuffle } from 'lodash';
-import { from, interval, Observable, EMPTY } from 'rxjs';
-import { map, repeat, startWith, zip } from 'rxjs/operators';
-import { GeneratorSettingsDialogComponent } from '../generator-settings-dialog/generator-settings-dialog.component';
 import { isPlatformBrowser } from '@angular/common';
-import { environment } from '../../../../../environments/environment';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { Component, ElementRef, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { range, sample, shuffle } from 'lodash';
+import { EMPTY, from, interval, Observable, Subscription } from 'rxjs';
+import { map, repeat, zip } from 'rxjs/operators';
+import { GeneratorSettingsDialogComponent } from '../generator-settings-dialog/generator-settings-dialog.component';
 
 interface NavItem {
   text: string;
@@ -19,7 +17,7 @@ interface NavItem {
 @Component({
   selector: 'app-ng-material-layout',
   templateUrl: './ng-material-layout.component.html',
-  styleUrls: [ './ng-material-layout.component.scss' ],
+  styleUrls: ['./ng-material-layout.component.scss'],
   animations: [
     trigger('fadingImageOne', [
       state('one', style({ opacity: 1 })),
@@ -39,6 +37,7 @@ export class NgMaterialLayoutComponent implements OnInit {
   @HostBinding('class.large-layout') largeLayout = false;
 
   changingImages$: Observable<any>;
+  changingImagesSubscription: Subscription;
 
   @ViewChild('fadingImageOne')
   fadingImageOne: ElementRef;
@@ -78,6 +77,7 @@ export class NgMaterialLayoutComponent implements OnInit {
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
     private readonly dialog: MatDialog,
+    private readonly renderer: Renderer2,
     @Inject(PLATFORM_ID) private readonly platformId: Object
   ) {
     this.breakpointObserver.observe(Breakpoints.XSmall).subscribe(result => result.matches && this.activateSmallLayout());
@@ -91,14 +91,13 @@ export class NgMaterialLayoutComponent implements OnInit {
     );
 
     if (isPlatformBrowser(platformId)) {
-      this.changingImages$ = interval(30000).pipe(
-        startWith(1),
+      this.changingImages$ = interval(3000).pipe(
         zip(
           from(this.slideShowImages).pipe(
             repeat()
           )
         ),
-        map(values => [ values[ 0 ] % 2, `url('${values[ 1 ]}')` ])
+        map(values => `url('${values[1]}')`)
       );
     } else {
       this.changingImages$ = EMPTY;
@@ -106,17 +105,22 @@ export class NgMaterialLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production });
+    this.renderer.setStyle(this.fadingImageOne.nativeElement, 'background-image', `url('${sample(this.slideShowImages)}')`);
+  }
 
-    this.changingImages$.subscribe(image => {
-      if (image[ 0 ] === 0) {
-        this.fadingImageOne.nativeElement.style.backgroundImage = image[ 1 ];
-        this.fadingImageState = 'one';
-      } else if (image[ 0 ] === 1) {
-        this.fadingImageTwo.nativeElement.style.backgroundImage = image[ 1 ];
-        this.fadingImageState = 'two';
-      }
-    });
+  @HostListener('document:click')
+  onDocumentClick() {
+    if (!this.changingImagesSubscription) {
+      this.changingImagesSubscription = this.changingImages$.subscribe(image => {
+        if (this.fadingImageState === 'one') {
+          this.fadingImageState = 'two';
+          this.renderer.setStyle(this.fadingImageTwo.nativeElement, 'background-image', image);
+        } else if (this.fadingImageState === 'two') {
+          this.fadingImageState = 'one';
+          this.renderer.setStyle(this.fadingImageOne.nativeElement, 'background-image', image);
+        }
+      });
+    }
   }
 
   activateSmallLayout() {
@@ -130,6 +134,6 @@ export class NgMaterialLayoutComponent implements OnInit {
   }
 
   onSettingsClick(e: Event) {
-    this.dialog.open(GeneratorSettingsDialogComponent, );
+    this.dialog.open(GeneratorSettingsDialogComponent);
   }
 }
