@@ -91,7 +91,7 @@ export class NgMaterialLayoutComponent implements OnInit {
     );
 
     if (isPlatformBrowser(platformId)) {
-      this.changingImages$ = interval(3000).pipe(
+      this.changingImages$ = interval(30000).pipe(
         zip(
           from(this.slideShowImages).pipe(
             repeat()
