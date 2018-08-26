@@ -7,16 +7,14 @@ const routes: Routes = [
     pathMatch: 'full',
     loadChildren: './routes/home/home.module#HomeModule'
   },
-  /*
   {
     path: 'auth',
     loadChildren: './routes/auth/auth.module#AuthModule'
   },
-  {
+  /*{
     path: 'users',
     loadChildren: './routes/users/users.module#UsersModule'
-  }
-  */
+  }*/
 ];
 
 @NgModule({

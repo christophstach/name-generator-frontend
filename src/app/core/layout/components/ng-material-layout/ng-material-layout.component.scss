@@ -1,29 +1,45 @@
-:host.small-layout {
-  .router-outlet-wrapper {
-    position: absolute;
-    width: 100%;
-    height: calc(100% - 56px);
-    top: 56px;
-  }
-
+:host {
   .logo {
     height: 32px;
   }
-}
 
-:host.large-layout {
   .router-outlet-wrapper {
     position: absolute;
     width: 100%;
-    height: calc(100% - 64px);
-    top: 64px;
   }
 
-  .logo {
-    height: 32px;
+  &.small-layout {
+    .router-outlet-wrapper {
+      height: calc(100% - 56px);
+      top: 56px;
+    }
+  }
+
+  &.small-layout.verify-email {
+    .router-outlet-wrapper {
+      height: calc(100% - 112px);
+      top: 112px;
+    }
+  }
+
+  &.large-layout {
+    .router-outlet-wrapper {
+      height: calc(100% - 64px);
+      top: 64px;
+    }
+  }
+
+  &.large-layout.verify-email {
+    .router-outlet-wrapper {
+      height: calc(100% - 128px);
+      top: 128px;
+    }
   }
 }
 
+.verify-email-toolbar {
+  justify-content: center;
+}
 
 .page-container {
   position: absolute;
@@ -37,7 +53,6 @@
   position: absolute;
   width: 100%;
 }
-
 
 mat-sidenav {
   mat-nav-list {

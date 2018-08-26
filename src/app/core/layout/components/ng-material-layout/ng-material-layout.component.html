@@ -17,19 +17,53 @@
 
     <div class="top-nav-wrapper">
       <mat-toolbar color="primary">
-        <img src="../../../../../assets/logo-inverse.png" alt="Logo" class="logo">
+        <button mat-icon-button="" routerLink="">
+          <img src="../../../../../assets/logo-inverse.png" alt="Logo" class="logo">
+        </button>
+
         <h1>Name Generator</h1>
 
         <span class="filler"></span>
         <button mat-icon-button aria-label="Settings" (click)="onSettingsClick($event)">
           <mat-icon>settings</mat-icon>
         </button>
+
+
+        <ng-container *ngIf="user$ | async as user; else showSignInAndRegister">
+          <button mat-button aria-label="User menu" [matMenuTriggerFor]="userMenu">
+            <mat-icon>account_circle</mat-icon>
+            {{user.displayName}}
+          </button>
+
+          <mat-menu #userMenu="matMenu">
+            <button mat-menu-item routerLink="auth/profile">Profile</button>
+            <button mat-menu-item routerLink="auth/sign-out">Sign out</button>
+          </mat-menu>
+        </ng-container>
+
+
+        <ng-template #showSignInAndRegister>
+          <button mat-icon-button aria-label="Sign in" routerLink="auth/sign-in">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+
+          <button mat-icon-button aria-label="Sign up" routerLink="auth/sign-up">
+            <mat-icon>perm_identity</mat-icon>
+          </button>
+        </ng-template>
+
+
+      </mat-toolbar>
+
+      <mat-toolbar color="accent" class="verify-email-toolbar mat-elevation-z8" *ngIf="verifyEmail">
+        <div>Please verify your E-Mail</div>
       </mat-toolbar>
     </div>
+
+
     <div class="mat-elevation-z24 router-outlet-wrapper">
       <router-outlet></router-outlet>
     </div>
-
 
   </mat-sidenav-content>
 </mat-sidenav-container>

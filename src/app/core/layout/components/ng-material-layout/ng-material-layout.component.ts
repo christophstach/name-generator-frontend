@@ -3,9 +3,11 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
 import { Component, ElementRef, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { User } from 'firebase';
 import { range, sample, shuffle } from 'lodash';
 import { EMPTY, from, interval, Observable, Subscription } from 'rxjs';
-import { map, repeat, zip } from 'rxjs/operators';
+import { map, repeat, tap, zip } from 'rxjs/operators';
 import { GeneratorSettingsDialogComponent } from '../generator-settings-dialog/generator-settings-dialog.component';
 
 interface NavItem {
@@ -35,7 +37,9 @@ interface NavItem {
 export class NgMaterialLayoutComponent implements OnInit {
   @HostBinding('class.small-layout') smallLayout = false;
   @HostBinding('class.large-layout') largeLayout = false;
+  @HostBinding('class.verify-email') verifyEmail = false;
 
+  user$: Observable<User>;
   changingImages$: Observable<any>;
   changingImagesSubscription: Subscription;
 
@@ -47,7 +51,8 @@ export class NgMaterialLayoutComponent implements OnInit {
 
   fadingImageState: 'one' | 'two' = 'one';
 
-  readonly numImages = 16;
+
+  readonly numImages = 3;
   readonly slideShowImages: string[];
   readonly navItems: NavItem[] = [
     {
@@ -78,6 +83,7 @@ export class NgMaterialLayoutComponent implements OnInit {
     private readonly breakpointObserver: BreakpointObserver,
     private readonly dialog: MatDialog,
     private readonly renderer: Renderer2,
+    private readonly afAuth: AngularFireAuth,
     @Inject(PLATFORM_ID) private readonly platformId: Object
   ) {
     this.breakpointObserver.observe(Breakpoints.XSmall).subscribe(result => result.matches && this.activateSmallLayout());
@@ -87,7 +93,7 @@ export class NgMaterialLayoutComponent implements OnInit {
     this.breakpointObserver.observe(Breakpoints.XLarge).subscribe(result => result.matches && this.activateLargeLayout());
 
     this.slideShowImages = shuffle(
-      range(1, this.numImages + 1).map(num => `../../../../../assets/backgrounds/${num}.jpg`)
+      range(1, this.numImages + 1).map(num => `../../../../../assets/backgrounds/sunny/${num}.jpg`)
     );
 
     if (isPlatformBrowser(platformId)) {
@@ -102,6 +108,16 @@ export class NgMaterialLayoutComponent implements OnInit {
     } else {
       this.changingImages$ = EMPTY;
     }
+
+    this.user$ = this.afAuth.user.pipe(
+      tap((user: User) => {
+        if (user) {
+          this.verifyEmail = !user.emailVerified;
+        } else {
+          this.verifyEmail = false;
+        }
+      })
+    );
   }
 
   ngOnInit() {

@@ -9,7 +9,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule,
+  MatMenuModule, MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
@@ -39,7 +39,8 @@ import { JoinPipe } from './pipes/join.pipe';
     MatDialogModule,
     MatRadioModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   declarations: [ JoinPipe ],
   exports: [
@@ -62,7 +63,8 @@ import { JoinPipe } from './pipes/join.pipe';
     MatDialogModule,
     MatRadioModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule {
