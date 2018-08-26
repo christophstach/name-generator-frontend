@@ -55,28 +55,6 @@ export class NgMaterialLayoutComponent implements OnInit {
   readonly numImages = 3;
   readonly slideShowImages: string[];
   readonly navItems: NavItem[] = [
-    {
-      text: 'Home',
-      route: '/',
-      icon: 'home'
-    },
-    {
-      text: 'Profile',
-      route: '/profile',
-      icon: 'account_circle',
-    },
-    {
-      text: 'Logout',
-      route: '/logout'
-    },
-    {
-      text: 'Login',
-      route: '/login'
-    },
-    {
-      text: 'Users',
-      route: '/users'
-    }
   ];
 
   constructor(

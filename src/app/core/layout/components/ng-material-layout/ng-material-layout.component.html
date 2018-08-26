@@ -1,12 +1,42 @@
 <mat-sidenav-container class="page-container">
   <mat-sidenav role="navigation" #sideNav>
-    <mat-toolbar color="primary" class="mat-elevation-z8">NG</mat-toolbar>
+    <mat-toolbar color="primary" class="mat-elevation-z8">
+      <mat-toolbar-row>
+        <button mat-icon-button routerLink="">
+          <img src="../../../../../assets/logo-inverse.png" alt="Logo" class="logo">
+        </button>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row *ngIf="user$ | async as user">
+        {{user.displayName}}
+      </mat-toolbar-row>
+    </mat-toolbar>
 
     <mat-nav-list>
-      <mat-list-item *ngFor="let navItem of navItems">
-        <a matLine [routerLink]="navItem.route">{{navItem.text}}</a>
-        <mat-icon *ngIf="navItem.icon">{{navItem.icon}}</mat-icon>
-      </mat-list-item>
+      <ng-container *ngIf="user$ | async as user; else showSignInAndRegisterSideNav">
+        <mat-list-item>
+          <a matLine routerLink="auth/profile">Profile</a>
+          <mat-icon>account_circle</mat-icon>
+        </mat-list-item>
+
+        <mat-list-item>
+          <a matLine routerLink="auth/sign-out">Sign out</a>
+          <mat-icon>power_settings_new</mat-icon>
+        </mat-list-item>
+      </ng-container>
+
+      <ng-template #showSignInAndRegisterSideNav>
+        <mat-list-item>
+          <a matLine routerLink="auth/sign-in">Sign in</a>
+          <mat-icon>account_circle</mat-icon>
+        </mat-list-item>
+
+        <mat-list-item>
+          <a matLine routerLink="auth/sign-up">Sign up</a>
+          <mat-icon>perm_identity</mat-icon>
+        </mat-list-item>
+      </ng-template>
+
     </mat-nav-list>
 
   </mat-sidenav>
@@ -17,7 +47,7 @@
 
     <div class="top-nav-wrapper">
       <mat-toolbar color="primary">
-        <button mat-icon-button="" routerLink="">
+        <button mat-icon-button routerLink="">
           <img src="../../../../../assets/logo-inverse.png" alt="Logo" class="logo">
         </button>
 
@@ -29,31 +59,43 @@
         </button>
 
 
-        <ng-container *ngIf="user$ | async as user; else showSignInAndRegister">
-          <button mat-button aria-label="User menu" [matMenuTriggerFor]="userMenu">
-            <mat-icon>account_circle</mat-icon>
-            {{user.displayName}}
-          </button>
+        <ng-container *ngIf="largeLayout; else showBurger">
+          <ng-container *ngIf="user$ | async as user; else showSignInAndRegister">
+            <button mat-button aria-label="User menu" [matMenuTriggerFor]="userMenu">
+              <mat-icon>account_circle</mat-icon>
+              {{user.displayName}}
+            </button>
 
-          <mat-menu #userMenu="matMenu">
-            <button mat-menu-item routerLink="auth/profile">Profile</button>
-            <button mat-menu-item routerLink="auth/sign-out">Sign out</button>
-          </mat-menu>
+            <mat-menu #userMenu="matMenu">
+              <button mat-menu-item routerLink="auth/profile">Profile</button>
+              <button mat-menu-item routerLink="auth/sign-out">Sign out</button>
+            </mat-menu>
+          </ng-container>
+
+
+          <ng-template #showSignInAndRegister>
+            <button mat-button aria-label="Sign in" routerLink="auth/sign-in">
+              <mat-icon>account_circle</mat-icon>
+              Sign in
+            </button>
+
+            <button mat-button aria-label="Sign up" routerLink="auth/sign-up">
+              <mat-icon>perm_identity</mat-icon>
+              Sign up
+            </button>
+          </ng-template>
         </ng-container>
 
 
-        <ng-template #showSignInAndRegister>
-          <button mat-icon-button aria-label="Sign in" routerLink="auth/sign-in">
-            <mat-icon>account_circle</mat-icon>
-          </button>
-
-          <button mat-icon-button aria-label="Sign up" routerLink="auth/sign-up">
-            <mat-icon>perm_identity</mat-icon>
+        <ng-template #showBurger>
+          <button mat-icon-button (click)="sideNav.toggle()">
+            <mat-icon>menu</mat-icon>
           </button>
         </ng-template>
 
 
       </mat-toolbar>
+
 
       <mat-toolbar color="accent" class="verify-email-toolbar mat-elevation-z8" *ngIf="verifyEmail">
         <div>Please verify your E-Mail</div>
