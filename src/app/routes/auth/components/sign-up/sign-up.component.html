@@ -15,6 +15,18 @@
         <input type="password" placeholder="Retype Password" formControlName="repeatPassword" matInput>
       </mat-form-field>
 
+      <mat-form-field>
+        <input type="text" placeholder="Display Name" formControlName="displayName" matInput>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text" placeholder="First Name" formControlName="firstName" matInput>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text" placeholder="Last Name" formControlName="lastName" matInput>
+      </mat-form-field>
+
     </mat-card-content>
     <mat-card-actions>
       <button type="submit" color="primary" [disabled]="!signUpForm.valid" mat-button>Sign up</button>

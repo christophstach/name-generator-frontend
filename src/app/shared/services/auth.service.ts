@@ -30,16 +30,28 @@ export class AuthService {
     );
   }
 
-  signUp(email, password): Observable<firebase.auth.UserCredential> {
+  signUp(email, password, displayName, firstName, lastName): Observable<User> {
     return from(this.afAuth.auth.createUserWithEmailAndPassword(email, password)).pipe(
       switchMap((userCredentials) => from(userCredentials.user.sendEmailVerification()).pipe(
         mapTo(userCredentials))
-      )
+      ),
+      switchMap((userCredentials) => {
+        return this.afFirestore.collection<User>('users').doc(userCredentials.user.uid).set({
+          id: userCredentials.user.uid,
+          email,
+          displayName,
+          firstName,
+          lastName
+        });
+      }),
+      switchMap(() => this.user$.pipe(take(1)))
     );
   }
 
-  signIn(email, password): Observable<firebase.auth.UserCredential> {
-    return from(this.afAuth.auth.signInWithEmailAndPassword(email, password));
+  signIn(email, password): Observable<User> {
+    return from(this.afAuth.auth.signInWithEmailAndPassword(email, password)).pipe(
+      switchMap(() => this.user$.pipe(take(1)))
+    );
   }
 
   signOut(): Observable<void> {

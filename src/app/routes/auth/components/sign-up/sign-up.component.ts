@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
@@ -29,7 +28,10 @@ export class SignUpComponent implements OnInit {
     this.signUpForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required],
-      repeatPassword: ['', Validators.required]
+      repeatPassword: ['', Validators.required],
+      displayName: ['', Validators.required],
+      firstName: [''],
+      lastName: [''],
     });
   }
 
@@ -40,14 +42,14 @@ export class SignUpComponent implements OnInit {
 
   async onSignUp() {
     if (this.signUpForm.valid) {
-      const { email, password, repeatPassword } = this.signUpForm.value;
+      const { email, password, repeatPassword, displayName, firstName, lastName } = this.signUpForm.value;
 
       if (password === repeatPassword) {
         try {
-          const userCredential = await this.authService.signUp(email, password).toPromise();
+          const user = await this.authService.signUp(email, password, displayName, firstName, lastName).toPromise();
           await this.router.navigateByUrl('');
 
-          this.snackBarService.open(`User ${userCredential.user.email} successfully signed up`, null, { duration: 2500 });
+          this.snackBarService.open(`User ${user.displayName} successfully signed up`, null, { duration: 2500 });
         } catch (e) {
           this.snackBarService.open(e, null, { duration: 2500 });
         }

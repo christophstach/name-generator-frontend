@@ -1,4 +1,28 @@
 service cloud.firestore {
+  function isSignedIn() {
+    return request.auth != null;
+  }
+
+  function isOwner(userId) {
+    return request.auth.uid == userId;
+  }
+
+  function hasRole(roles) {
+    return false;
+  }
+
+  function emailVerified() {
+    return request.auth.token.email_verified;
+  }
+
+  function existingData() {
+    return resource.data;
+  }
+
+  function incomingData() {
+    return request.resource.data;
+  }
+
   match /databases/{database}/documents {
     match /users/{userId} {
       allow get: if isOwner(userId) || hasRole(['admin']);
@@ -7,30 +31,11 @@ service cloud.firestore {
       allow create: if isOwner(userId) || hasRole(['admin']);
       allow update: if (isOwner(userId) && emailVerified()) || hasRole(['admin']);
       allow delete: if (isOwner(userId) && emailVerified()) || hasRole(['admin']);
-    }
 
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
-    function isOwner(userId) {
-      return request.auth.uid == userId;
-    }
-
-    function hasRole(roles) {
-      return false;
-    }
-
-    function emailVerified() {
-      return request.auth.token.email_verified;
-    }
-
-    function existingData() {
-      return resource.data;
-    }
-
-    function incomingData() {
-      return request.resource.data;
+      match /roles {
+        allow read: if isOwner(userId) || hasRole(['admin']);
+        allow write: if hasRole(['admin']);
+      }
     }
   }
 }

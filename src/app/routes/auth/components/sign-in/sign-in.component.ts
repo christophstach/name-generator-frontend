@@ -42,10 +42,10 @@ export class SignInComponent implements OnInit {
       const { email, password } = this.signInForm.value;
 
       try {
-        const userCredential = await this.authService.signIn(email, password).toPromise();
+        const user = await this.authService.signIn(email, password).toPromise();
         await this.router.navigateByUrl('');
 
-        this.snackBarService.open(`Welcome back, ${userCredential.user.email}`, null, { duration: 2500 });
+        this.snackBarService.open(`Welcome back, ${user.displayName}`, null, { duration: 2500 });
       } catch (e) {
         this.snackBarService.open(e, null, { duration: 2500 });
       }
