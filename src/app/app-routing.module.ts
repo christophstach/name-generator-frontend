@@ -11,15 +11,15 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: './routes/auth/auth.module#AuthModule'
   },
-  /*{
+  {
     path: 'users',
     loadChildren: './routes/users/users.module#UsersModule'
-  }*/
+  }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 }
