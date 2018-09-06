@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,7 +15,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly afAuth: AngularFireAuth,
+    private readonly authService: AuthService,
     private readonly snackBarService: MatSnackBar,
     private readonly router: Router
   ) {
@@ -43,8 +44,7 @@ export class SignUpComponent implements OnInit {
 
       if (password === repeatPassword) {
         try {
-          const userCredential = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-          await userCredential.user.sendEmailVerification();
+          const userCredential = await this.authService.signUp(email, password).toPromise();
           await this.router.navigateByUrl('');
 
           this.snackBarService.open(`User ${userCredential.user.email} successfully signed up`, null, { duration: 2500 });

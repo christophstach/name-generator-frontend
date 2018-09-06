@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,7 +15,7 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly afAuth: AngularFireAuth,
+    private readonly authService: AuthService,
     private readonly snackBarService: MatSnackBar,
     private readonly router: Router
   ) {
@@ -41,7 +42,7 @@ export class SignInComponent implements OnInit {
       const { email, password } = this.signInForm.value;
 
       try {
-        const userCredential = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+        const userCredential = await this.authService.signIn(email, password).toPromise();
         await this.router.navigateByUrl('');
 
         this.snackBarService.open(`Welcome back, ${userCredential.user.email}`, null, { duration: 2500 });
