@@ -35,7 +35,7 @@ interface NavItem {
   ]
 })
 export class NgMaterialLayoutComponent implements OnInit {
-  @HostBinding('class.small-layout') smallLayout = false;
+  @HostBinding('class.small-layout') smallLayout = true;
   @HostBinding('class.large-layout') largeLayout = false;
   @HostBinding('class.verify-email') verifyEmail = false;
 
@@ -52,10 +52,8 @@ export class NgMaterialLayoutComponent implements OnInit {
   fadingImageState: 'one' | 'two' = 'one';
 
 
-  readonly numImages = 3;
+  readonly numImages = 16;
   readonly slideShowImages: string[];
-  readonly navItems: NavItem[] = [
-  ];
 
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
@@ -71,7 +69,7 @@ export class NgMaterialLayoutComponent implements OnInit {
     this.breakpointObserver.observe(Breakpoints.XLarge).subscribe(result => result.matches && this.activateLargeLayout());
 
     this.slideShowImages = shuffle(
-      range(1, this.numImages + 1).map(num => `../../../../../assets/backgrounds/sunny/${num}.jpg`)
+      range(1, this.numImages + 1).map(num => `../../../../../assets/backgrounds/${num}.jpg`)
     );
 
     if (isPlatformBrowser(platformId)) {

@@ -40,6 +40,7 @@
     "@nguniversal/express-engine": "^6.1.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.1.0",
     "angularfire2": "^5.0.0-rc.12",
+    "angulartics2": "^6.2.0",
     "cat-names": "^1.0.2",
     "core-js": "^2.5.4",
     "dog-names": "^1.0.2",

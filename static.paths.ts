@@ -1,5 +1,6 @@
 export const ROUTES = [
   '/',
-  '/auth/sign-in',
-  '/auth/sign-up'
+  '/auth/',
+  '/auth/sign-in/',
+  '/auth/sign-up/'
 ];

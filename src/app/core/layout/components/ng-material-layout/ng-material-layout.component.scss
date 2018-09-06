@@ -6,6 +6,15 @@
   .router-outlet-wrapper {
     position: absolute;
     width: 100%;
+    height: calc(100% - 56px);
+    top: 56px;
+  }
+
+  &.verify-email {
+    .router-outlet-wrapper {
+      height: calc(100% - 112px);
+      top: 112px;
+    }
   }
 
   &.small-layout {
