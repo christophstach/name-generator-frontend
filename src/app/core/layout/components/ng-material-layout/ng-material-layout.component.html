@@ -97,7 +97,7 @@
       </mat-toolbar>
 
 
-      <mat-toolbar color="accent" class="verify-email-toolbar mat-elevation-z8" *ngIf="verifyEmail">
+      <mat-toolbar color="accent" class="verify-email-toolbar mat-elevation-z8" *ngIf="!(emailVerified$ | async)">
         <div>Please verify your E-Mail</div>
       </mat-toolbar>
     </div>

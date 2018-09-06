@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { User } from 'firebase';
+
 import { Subscription } from 'rxjs';
+import { User } from '../../../../shared/models/user';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,19 +17,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly afAuth: AngularFireAuth,
     private readonly snackBarService: MatSnackBar,
+    private readonly authService: AuthService
   ) {
   }
 
   ngOnInit() {
     this.createForm();
     this.subscriptions.push(
-      this.afAuth.user.subscribe((user: User) => {
-        const { displayName } = user;
+      this.authService.user$.subscribe((user: User) => {
+        const { displayName, firstName, lastName } = user;
 
         this.profileForm.patchValue({
-          displayName
+          displayName,
+          firstName,
+          lastName
         });
       })
     );
@@ -42,7 +45,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   createForm() {
     this.profileForm = this.fb.group({
       displayName: [''],
-      photoURL: ['']
+      firstName: [''],
+      lastName: ['']
     });
   }
 
@@ -53,14 +57,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   async onSave() {
     if (this.profileForm.valid) {
-      const { displayName, photoURL } = this.profileForm.value;
+      const { displayName, firstName, lastName } = this.profileForm.value as User;
 
       try {
-        await this.afAuth.auth.currentUser.updateProfile({
-          displayName,
-          photoURL
-        });
-
+        await this.authService.updateProfile({ displayName, firstName, lastName }).toPromise();
         this.snackBarService.open(`Profile saved`, null, { duration: 2500 });
       } catch (e) {
         this.snackBarService.open(e, null, { duration: 2500 });

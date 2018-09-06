@@ -10,7 +10,7 @@
     top: 56px;
   }
 
-  &.verify-email {
+  &.email-not-verified {
     .router-outlet-wrapper {
       height: calc(100% - 112px);
       top: 112px;
@@ -24,7 +24,7 @@
     }
   }
 
-  &.small-layout.verify-email {
+  &.small-layout.email-not-verified {
     .router-outlet-wrapper {
       height: calc(100% - 112px);
       top: 112px;
@@ -38,7 +38,7 @@
     }
   }
 
-  &.large-layout.verify-email {
+  &.large-layout.email-not-verified {
     .router-outlet-wrapper {
       height: calc(100% - 128px);
       top: 128px;

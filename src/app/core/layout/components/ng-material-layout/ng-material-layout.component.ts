@@ -3,18 +3,12 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
 import { Component, ElementRef, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { User } from 'firebase';
 import { range, sample, shuffle } from 'lodash';
 import { EMPTY, from, interval, Observable, Subscription } from 'rxjs';
-import { map, repeat, tap, zip } from 'rxjs/operators';
+import { map, repeat, startWith, tap, zip } from 'rxjs/operators';
+import { User } from '../../../../shared/models/user';
+import { AuthService } from '../../../../shared/services/auth.service';
 import { GeneratorSettingsDialogComponent } from '../generator-settings-dialog/generator-settings-dialog.component';
-
-interface NavItem {
-  text: string;
-  route: string;
-  icon?: string;
-}
 
 @Component({
   selector: 'app-ng-material-layout',
@@ -37,9 +31,10 @@ interface NavItem {
 export class NgMaterialLayoutComponent implements OnInit {
   @HostBinding('class.small-layout') smallLayout = true;
   @HostBinding('class.large-layout') largeLayout = false;
-  @HostBinding('class.verify-email') verifyEmail = false;
+  @HostBinding('class.email-not-verified') emailNotVerified = false;
 
   user$: Observable<User>;
+  emailVerified$: Observable<boolean>;
   changingImages$: Observable<any>;
   changingImagesSubscription: Subscription;
 
@@ -59,7 +54,7 @@ export class NgMaterialLayoutComponent implements OnInit {
     private readonly breakpointObserver: BreakpointObserver,
     private readonly dialog: MatDialog,
     private readonly renderer: Renderer2,
-    private readonly afAuth: AngularFireAuth,
+    private readonly authService: AuthService,
     @Inject(PLATFORM_ID) private readonly platformId: Object
   ) {
     this.breakpointObserver.observe(Breakpoints.XSmall).subscribe(result => result.matches && this.activateSmallLayout());
@@ -85,15 +80,11 @@ export class NgMaterialLayoutComponent implements OnInit {
       this.changingImages$ = EMPTY;
     }
 
-    this.user$ = this.afAuth.user.pipe(
-      tap((user: User) => {
-        if (user) {
-          this.verifyEmail = !user.emailVerified;
-        } else {
-          this.verifyEmail = false;
-        }
-      })
+    this.emailVerified$ = this.authService.emailVerified$.pipe(
+      startWith(true),
+      tap((emailVerified) => this.emailNotVerified = !emailVerified)
     );
+    this.user$ = this.authService.user$;
   }
 
   ngOnInit() {
