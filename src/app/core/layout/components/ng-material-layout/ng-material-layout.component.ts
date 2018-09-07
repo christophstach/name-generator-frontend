@@ -47,7 +47,7 @@ export class NgMaterialLayoutComponent implements OnInit {
   fadingImageState: 'one' | 'two' = 'one';
 
 
-  readonly numImages = 16;
+  readonly numImages = 10;
   readonly slideShowImages: string[];
 
   constructor(
