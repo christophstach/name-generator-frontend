@@ -65,7 +65,7 @@ export class NgMaterialLayoutComponent implements OnInit {
     this.slideShowImages = shuffle(
       range(1, this.numImages + 1).map(num => `../../../../../assets/backgrounds/${num}.jpg`)
     );
-    
+
     if (isPlatformBrowser(platformId)) {
       // Preload images
       const images = [];
