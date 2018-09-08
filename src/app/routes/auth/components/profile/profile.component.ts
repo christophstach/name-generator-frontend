@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
+
     this.subscriptions.push(
       this.authService.user$.subscribe((user: User) => {
         const { displayName, firstName, lastName } = user;
@@ -33,6 +34,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
           firstName,
           lastName
         });
+      })
+    );
+
+    this.subscriptions.push(
+      this.authService.emailVerified$.subscribe((emailVerified: boolean) => {
+        if (emailVerified) {
+          this.profileForm.enable();
+        } else {
+          this.profileForm.disable();
+        }
       })
     );
   }
@@ -48,11 +59,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       firstName: [''],
       lastName: ['']
     });
-  }
-
-  onReset(e: Event) {
-    e.preventDefault();
-    this.profileForm.reset();
   }
 
   async onSave() {

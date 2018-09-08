@@ -3,10 +3,6 @@ service cloud.firestore {
     return request.auth != null;
   }
 
-  function isOwner(userId) {
-    return request.auth.uid == userId;
-  }
-
   function hasRole(roles) {
     return false;
   }
@@ -25,17 +21,20 @@ service cloud.firestore {
 
   match /databases/{database}/documents {
     match /users/{userId} {
-      allow get: if isOwner(userId) || hasRole(['admin']);
+      function isOwner() {
+        return request.auth.uid == userId;
+      }
+
+      function isEditingOwnRoles() {
+				return isOwner() && incomingData().keys().hasAll(['roles']);
+      }
+
+      allow get: if isOwner() || hasRole(['admin']);
       allow list: if hasRole(['admin']);
 
-      allow create: if isOwner(userId) || hasRole(['admin']);
-      allow update: if (isOwner(userId) && emailVerified()) || hasRole(['admin']);
-      allow delete: if (isOwner(userId) && emailVerified()) || hasRole(['admin']);
-
-      match /roles {
-        allow read: if isOwner(userId) || hasRole(['admin']);
-        allow write: if hasRole(['admin']);
-      }
+      allow create: if ((isOwner() || hasRole(['admin'])) && !isEditingOwnRoles());
+      allow update: if ((isOwner() || hasRole(['admin'])) && !isEditingOwnRoles());
+      allow delete: if (isOwner() || hasRole(['admin']));
     }
   }
 }
