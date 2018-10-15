@@ -10,8 +10,8 @@ import { AuthService } from '../../../../shared/services/auth.service';
 export class SignOutComponent implements OnInit {
 
   constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 

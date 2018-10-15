@@ -19,13 +19,6 @@ export class SillyIdsComponent extends GeneratorComponent {
   @ViewChild('sillyIdsNameWrapper')
   sillyIdsNameWrapper: ElementRef;
 
-  @HostListener('document:click', ['$event'])
-  onClick(e: MouseEvent) {
-    if (e.target === this.sillyIdsCard.nativeElement || e.target === this.sillyIdsNameWrapper.nativeElement) {
-      this.generate();
-    }
-  }
-
   constructor(
     readonly generatorService: SillyIdsService,
     readonly stringHelperService: StringHelperService,
@@ -34,5 +27,12 @@ export class SillyIdsComponent extends GeneratorComponent {
     readonly clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(e: MouseEvent) {
+    if (e.target === this.sillyIdsCard.nativeElement || e.target === this.sillyIdsNameWrapper.nativeElement) {
+      this.generate();
+    }
   }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
 import { Subscription } from 'rxjs';
-import { User } from '../../../../shared/models/user';
+import { UserProfile } from '../../../../shared/models/user-profile';
 import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
@@ -16,9 +16,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly snackBarService: MatSnackBar,
-    private readonly authService: AuthService
+    private fb: FormBuilder,
+    private snackBarService: MatSnackBar,
+    private authService: AuthService
   ) {
   }
 
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.createForm();
 
     this.subscriptions.push(
-      this.authService.user$.subscribe((user: User) => {
+      this.authService.user$.subscribe((user: UserProfile) => {
         const { displayName, firstName, lastName } = user;
 
         this.profileForm.patchValue({
@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   async onSave() {
     if (this.profileForm.valid) {
-      const { displayName, firstName, lastName } = this.profileForm.value as User;
+      const { displayName, firstName, lastName } = this.profileForm.value as UserProfile;
 
       try {
         await this.authService.updateProfile({ displayName, firstName, lastName }).toPromise();

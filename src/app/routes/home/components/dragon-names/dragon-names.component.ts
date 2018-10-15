@@ -19,13 +19,6 @@ export class DragonNamesComponent extends GeneratorComponent {
   @ViewChild('dragonNamesNameWrapper')
   dragonNamesNameWrapper: ElementRef;
 
-  @HostListener('document:click', ['$event'])
-  onClick(e: MouseEvent) {
-    if (e.target === this.dragonNamesCard.nativeElement || e.target === this.dragonNamesNameWrapper.nativeElement) {
-      this.generate();
-    }
-  }
-
   constructor(
     readonly generatorService: DragonNamesService,
     readonly stringHelperService: StringHelperService,
@@ -34,5 +27,12 @@ export class DragonNamesComponent extends GeneratorComponent {
     readonly clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(e: MouseEvent) {
+    if (e.target === this.dragonNamesCard.nativeElement || e.target === this.dragonNamesNameWrapper.nativeElement) {
+      this.generate();
+    }
   }
 }

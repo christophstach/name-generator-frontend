@@ -12,7 +12,7 @@ import { metaReducers, reducers } from './reducers';
     CommonModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([ RootEffects ])
+    EffectsModule.forRoot([RootEffects])
   ],
   declarations: []
 })

@@ -13,10 +13,10 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly snackBarService: MatSnackBar,
-    private readonly router: Router
+    private  fb: FormBuilder,
+    private  authService: AuthService,
+    private  snackBarService: MatSnackBar,
+    private  router: Router
   ) {
   }
 
@@ -46,7 +46,7 @@ export class SignUpComponent implements OnInit {
 
       if (password === repeatPassword) {
         try {
-          const user = await this.authService.signUp(email, password, displayName, firstName, lastName).toPromise();
+          const user = await this.authService.signUp({ email, password, displayName, firstName, lastName }).toPromise();
           await this.router.navigateByUrl('');
 
           this.snackBarService.open(`User ${user.displayName} successfully signed up`, null, { duration: 2500 });

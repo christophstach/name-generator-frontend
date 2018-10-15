@@ -1,10 +1,5 @@
-import { Roles } from './roles';
+import { UserProfile } from './user-profile';
 
-export interface User {
-  id: string;
-  roles?: Roles;
-  email: string;
-  displayName: string;
-  firstName: string;
-  lastName: string;
+export interface User extends UserProfile {
+  password?: string;
 }

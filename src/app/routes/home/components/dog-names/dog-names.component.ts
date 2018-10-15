@@ -19,13 +19,6 @@ export class DogNamesComponent extends GeneratorComponent {
   @ViewChild('dogNamesNameWrapper')
   dogNamesNameWrapper: ElementRef;
 
-  @HostListener('document:click', ['$event'])
-  onClick(e: MouseEvent) {
-    if (e.target === this.dogNamesCard.nativeElement || e.target === this.dogNamesNameWrapper.nativeElement) {
-      this.generate();
-    }
-  }
-
   constructor(
     readonly generatorService: DogNamesService,
     readonly stringHelperService: StringHelperService,
@@ -34,5 +27,12 @@ export class DogNamesComponent extends GeneratorComponent {
     readonly clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(e: MouseEvent) {
+    if (e.target === this.dogNamesCard.nativeElement || e.target === this.dogNamesNameWrapper.nativeElement) {
+      this.generate();
+    }
   }
 }

@@ -158,7 +158,7 @@ export class StringHelperService {
 
 
     for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
-      str = str.replace(defaultDiacriticsRemovalMap[ i ].letters, defaultDiacriticsRemovalMap[ i ].base);
+      str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
     }
 
     return str;

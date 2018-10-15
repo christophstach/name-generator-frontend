@@ -10,7 +10,7 @@ import { Root } from '../../../state/reducers';
 @Component({
   selector: 'app-generator-settings-dialog',
   templateUrl: './generator-settings-dialog.component.html',
-  styleUrls: [ './generator-settings-dialog.component.scss' ]
+  styleUrls: ['./generator-settings-dialog.component.scss']
 })
 export class GeneratorSettingsDialogComponent {
   settingsForm: FormGroup;
@@ -32,6 +32,14 @@ export class GeneratorSettingsDialogComponent {
       this.generatorSettings = generatorSettings;
       this.settingsForm.setValue(generatorSettings);
     });
+  }
+
+  get mode() {
+    return this.settingsForm.get('mode');
+  }
+
+  get separator() {
+    return this.settingsForm.get('separator');
   }
 
   createForm() {
@@ -58,14 +66,6 @@ export class GeneratorSettingsDialogComponent {
         }
       }
     });
-  }
-
-  get mode() {
-    return this.settingsForm.get('mode');
-  }
-
-  get separator() {
-    return this.settingsForm.get('separator');
   }
 
   onSaveClick(e: Event) {

@@ -19,13 +19,6 @@ export class CatNamesComponent extends GeneratorComponent {
   @ViewChild('catNamesNameWrapper')
   catNamesNameWrapper: ElementRef;
 
-  @HostListener('document:click', ['$event'])
-  onClick(e: MouseEvent) {
-    if (e.target === this.catNamesCard.nativeElement || e.target === this.catNamesNameWrapper.nativeElement) {
-      this.generate();
-    }
-  }
-
   constructor(
     readonly generatorService: CatNamesService,
     readonly stringHelperService: StringHelperService,
@@ -34,5 +27,12 @@ export class CatNamesComponent extends GeneratorComponent {
     readonly clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(e: MouseEvent) {
+    if (e.target === this.catNamesCard.nativeElement || e.target === this.catNamesNameWrapper.nativeElement) {
+      this.generate();
+    }
   }
 }

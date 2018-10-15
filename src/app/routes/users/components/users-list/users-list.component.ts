@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../../../../shared/models/user';
+import { UserProfile } from '../../../../shared/models/user-profile';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { UsersService } from '../../../../shared/services/users.service';
 
@@ -10,14 +10,14 @@ import { UsersService } from '../../../../shared/services/users.service';
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  users$: Observable<User[]>;
-  user$: Observable<User>;
+  users$: Observable<UserProfile[]>;
+  user$: Observable<UserProfile>;
 
   constructor(
-    private readonly usersService: UsersService,
-    private readonly authService: AuthService
+    private usersService: UsersService,
+    private authService: AuthService
   ) {
-    this.users$ = this.usersService.users$;
+    this.users$ = this.usersService.userProfiles;
   }
 
   ngOnInit() {

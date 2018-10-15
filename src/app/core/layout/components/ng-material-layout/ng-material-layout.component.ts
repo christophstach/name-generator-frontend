@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { range, sample, shuffle } from 'lodash';
 import { EMPTY, from, interval, Observable, Subscription } from 'rxjs';
 import { map, repeat, startWith, tap, zip } from 'rxjs/operators';
-import { User } from '../../../../shared/models/user';
+import { UserProfile } from '../../../../shared/models/user-profile';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { GeneratorSettingsDialogComponent } from '../generator-settings-dialog/generator-settings-dialog.component';
 
@@ -33,7 +33,7 @@ export class NgMaterialLayoutComponent implements OnInit {
   @HostBinding('class.large-layout') largeLayout = false;
   @HostBinding('class.email-not-verified') emailNotVerified = false;
 
-  user$: Observable<User>;
+  user$: Observable<UserProfile>;
   emailVerified$: Observable<boolean>;
   changingImages$: Observable<any>;
   changingImagesSubscription: Subscription;

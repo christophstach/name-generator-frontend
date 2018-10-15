@@ -19,22 +19,24 @@ service cloud.firestore {
     return request.resource.data;
   }
 
+  function isDocumentOwner() {
+    return 'owner' in existingData().keys() && request.auth.uid == existingData().owner;
+  }
+
   match /databases/{database}/documents {
-    match /users/{userId} {
-      function isOwner() {
-        return request.auth.uid == userId;
-      }
+    match /user-profiles/{userId} {
+
 
       function isEditingOwnRoles() {
-				return isOwner() && incomingData().keys().hasAll(['roles']);
+				return isDocumentOwner() && incomingData().keys().hasAll(['roles']);
       }
 
-      allow get: if isOwner() || hasRole(['admin']);
+      allow get: if isDocumentOwner() || hasRole(['admin']);
       allow list: if hasRole(['admin']);
 
-      allow create: if ((isOwner() || hasRole(['admin'])) && !isEditingOwnRoles());
-      allow update: if ((isOwner() || hasRole(['admin'])) && !isEditingOwnRoles());
-      allow delete: if (isOwner() || hasRole(['admin']));
+      allow create: if ((isDocumentOwner() || hasRole(['admin'])) && !isEditingOwnRoles());
+      allow update: if ((isDocumentOwner() || hasRole(['admin'])) && !isEditingOwnRoles());
+      allow delete: if (isDocumentOwner() || hasRole(['admin']));
     }
   }
 }

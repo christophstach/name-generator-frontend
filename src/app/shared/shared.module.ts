@@ -9,7 +9,8 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule, MatProgressSpinnerModule,
+  MatMenuModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
@@ -42,7 +43,7 @@ import { JoinPipe } from './pipes/join.pipe';
     MatSelectModule,
     MatProgressSpinnerModule
   ],
-  declarations: [ JoinPipe ],
+  declarations: [JoinPipe],
   exports: [
     CommonModule,
     RouterModule,
