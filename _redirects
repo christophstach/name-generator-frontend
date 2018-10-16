@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+https://awesome-shannon-c360b6.netlify.com/* https://name-generator.christophstach.me/:splat 301!
