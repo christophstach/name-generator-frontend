@@ -5,7 +5,7 @@ interface HelloResponse {
   body: string;
 }
 
-const hello: Handler = (event: any, context: Context, callback: Callback) => {
+const handler: Handler = (event: any, context: Context, callback: Callback) => {
   const response: HelloResponse = {
     statusCode: 200,
     body: JSON.stringify({
@@ -13,8 +13,8 @@ const hello: Handler = (event: any, context: Context, callback: Callback) => {
     })
   };
 
-  callback(undefined, response);
+  callback(null, response);
 };
 
-export { hello };
+export { handler };
 
