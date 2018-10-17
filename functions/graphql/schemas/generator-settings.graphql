@@ -1,0 +1,26 @@
+enum GeneratorSettingsMode {
+  NORMAL,
+  SEPARATOR
+}
+
+type GeneratorSettings {
+  id: ID!
+  uid: String!
+  mode: GeneratorSettingsMode!
+  separator: String
+  prefix: String
+  suffix: String
+}
+
+type Query {
+  getOwnGeneratorSettings: GeneratorSettings
+}
+
+type Mutation {
+  saveOwnGeneratorSettings(
+    mode: GeneratorSettingsMode!
+    separator: String
+    prefix: String
+    suffix: String
+  ): GeneratorSettings
+}

@@ -1,14 +1,39 @@
+import { importSchema } from 'graphql-import';
 import { GraphQLServerLambda } from 'graphql-yoga';
+import { GeneratorSettingsResolver } from './resolvers/generator-settings.resolver';
 
-const typeDefs = `
-  type Query {
-    hello(name: String): String
-  }
-`;
+const typeDefs = importSchema(`
+enum GeneratorSettingsMode {
+  NORMAL,
+  SEPARATOR
+}
+
+type GeneratorSettings {
+  id: ID!
+  uid: String!
+  mode: GeneratorSettingsMode!
+  separator: String
+  prefix: String
+  suffix: String
+}
+
+type Query {
+  getOwnGeneratorSettings: GeneratorSettings
+}
+
+type Mutation {
+  saveOwnGeneratorSettings(
+    mode: GeneratorSettingsMode!
+    separator: String
+    prefix: String
+    suffix: String
+  ): GeneratorSettings
+}
+`);
 
 const resolvers = {
   Query: {
-    hello: (_, { name }) => `Hello ${name || 'world'}`
+    getOwnGeneratorSettings: GeneratorSettingsResolver.getOwnGeneratorSettings
   }
 };
 
