@@ -1,8 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/functions",
-    "sourceMap": false,
+    "module": "commonjs",
+    "outDir": "./out-tsc/functions",
+    "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -12,7 +13,7 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "esnext.asynciterable"
     ]
   },
