@@ -72,10 +72,8 @@ mat-sidenav {
 }
 
 mat-sidenav-content {
-  .fading-image {
-    will-change: opacity;
-    opacity: 0;
-    background-position: center;
+  .background-image {
+    background: url(../../../../../assets/background.jpg) center;
     background-size: cover;
     position: absolute;
     width: 100%;

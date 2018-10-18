@@ -5,6 +5,6 @@ import { Actions } from '@ngrx/effects';
 @Injectable()
 export class RootEffects {
 
-  constructor(private readonly actions$: Actions) {
+  constructor(private actions$: Actions) {
   }
 }

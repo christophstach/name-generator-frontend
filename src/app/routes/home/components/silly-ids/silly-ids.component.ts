@@ -20,11 +20,11 @@ export class SillyIdsComponent extends GeneratorComponent {
   sillyIdsNameWrapper: ElementRef;
 
   constructor(
-    readonly generatorService: SillyIdsService,
-    readonly stringHelperService: StringHelperService,
-    readonly snackBarService: MatSnackBar,
-    readonly store: Store<Root>,
-    readonly clipboardService: ClipboardService
+    generatorService: SillyIdsService,
+    stringHelperService: StringHelperService,
+    snackBarService: MatSnackBar,
+    store: Store<Root>,
+    clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
   }

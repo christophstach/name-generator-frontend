@@ -20,11 +20,11 @@ export class CatNamesComponent extends GeneratorComponent {
   catNamesNameWrapper: ElementRef;
 
   constructor(
-    readonly generatorService: CatNamesService,
-    readonly stringHelperService: StringHelperService,
-    readonly snackBarService: MatSnackBar,
-    readonly store: Store<Root>,
-    readonly clipboardService: ClipboardService
+    generatorService: CatNamesService,
+    stringHelperService: StringHelperService,
+    snackBarService: MatSnackBar,
+    store: Store<Root>,
+    clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
   }

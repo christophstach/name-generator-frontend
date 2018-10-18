@@ -11,11 +11,11 @@ export abstract class GeneratorComponent {
   settings: GeneratorSettingsInterface;
 
   protected constructor(
-    protected readonly generatorService: GeneratorServiceInterface,
-    protected readonly stringHelperService: StringHelperService,
-    protected readonly snackBarService: MatSnackBar,
-    protected readonly store: Store<Root>,
-    protected readonly clipboardService: ClipboardService
+    protected generatorService: GeneratorServiceInterface,
+    protected stringHelperService: StringHelperService,
+    protected snackBarService: MatSnackBar,
+    protected store: Store<Root>,
+    protected clipboardService: ClipboardService
   ) {
     this.store.pipe(
       select('generatorSettings')

@@ -20,9 +20,9 @@ export class GeneratorSettingsDialogComponent {
   private valueChangesSubscription: Subscription;
 
   constructor(
-    public readonly dialogRef: MatDialogRef<GeneratorSettingsDialogComponent>,
-    private readonly fb: FormBuilder,
-    private readonly store: Store<Root>
+    public dialogRef: MatDialogRef<GeneratorSettingsDialogComponent>,
+    private fb: FormBuilder,
+    private store: Store<Root>
   ) {
     this.createForm();
 

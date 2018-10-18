@@ -20,11 +20,11 @@ export class DragonNamesComponent extends GeneratorComponent {
   dragonNamesNameWrapper: ElementRef;
 
   constructor(
-    readonly generatorService: DragonNamesService,
-    readonly stringHelperService: StringHelperService,
-    readonly snackBarService: MatSnackBar,
-    readonly store: Store<Root>,
-    readonly clipboardService: ClipboardService
+    generatorService: DragonNamesService,
+    stringHelperService: StringHelperService,
+    snackBarService: MatSnackBar,
+    store: Store<Root>,
+    clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
   }

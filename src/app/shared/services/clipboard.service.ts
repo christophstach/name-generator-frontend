@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/platform-browser';
 })
 export class ClipboardService {
   private tempTextArea: HTMLTextAreaElement | undefined;
-  private readonly window: Window;
+  private window: Window;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

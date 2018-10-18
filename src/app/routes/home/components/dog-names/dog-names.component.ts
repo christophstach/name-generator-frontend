@@ -20,11 +20,11 @@ export class DogNamesComponent extends GeneratorComponent {
   dogNamesNameWrapper: ElementRef;
 
   constructor(
-    readonly generatorService: DogNamesService,
-    readonly stringHelperService: StringHelperService,
-    readonly snackBarService: MatSnackBar,
-    readonly store: Store<Root>,
-    readonly clipboardService: ClipboardService
+    generatorService: DogNamesService,
+    stringHelperService: StringHelperService,
+    snackBarService: MatSnackBar,
+    store: Store<Root>,
+    clipboardService: ClipboardService
   ) {
     super(generatorService, stringHelperService, snackBarService, store, clipboardService);
   }
