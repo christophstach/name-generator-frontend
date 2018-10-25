@@ -7,7 +7,7 @@ import { UserProfile } from '../models/user-profile';
 })
 export class UsersService {
   userProfiles: Observable<UserProfile[]>;
-  
+
   constructor() {
     this.userProfiles = EMPTY;
   }
